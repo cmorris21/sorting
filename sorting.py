@@ -2,7 +2,6 @@
 '''
 Python provides built-in sort/sorted functions that use timsort internally.
 You cannot use these built-in functions anywhere in this file.
-
 Every function in this file takes a comparator `cmp` as input which controls how the elements of the list should be compared against each other.
 If cmp(a,b) returns -1, then a<b;
 if cmp(a,b) returns  1, then a>b;
@@ -40,7 +39,7 @@ def cmp_last_digit(a,b):
     return cmp_standard(a%10,b%10)
 
 
-def _merged(xs, ys, cmp=cmp_standard):
+def _merged(left, right, cmp=cmp_standard):
     '''
     Assumes that both xs and ys are sorted,
     and returns a new list containing the elements of both xs and ys.
@@ -73,14 +72,13 @@ def _merged(xs, ys, cmp=cmp_standard):
         hi += 1
         x+= 1
   
+               
     return xs
-
 
 def merge_sorted(xs, cmp=cmp_standard):
     '''
     Merge sort is the standard O(n log n) sorting algorithm.
     Recall that the merge sort pseudo code is:
-
         if xs has 1 element
             it is sorted, so return xs
         else
@@ -88,7 +86,6 @@ def merge_sorted(xs, cmp=cmp_standard):
             sort the left
             sort the right
             merge the two sorted halves
-
     You should return a sorted version of the input list xs
     '''
     if len(xs) <= 1:
@@ -99,7 +96,6 @@ def merge_sorted(xs, cmp=cmp_standard):
         right = xs[mid:]
         return _merged(merge_sorted(left,cmp),merge_sorted(right,cmp),cmp)
 
-
 def quick_sorted(xs, cmp=cmp_standard):
     '''
     Quicksort is like mergesort,
@@ -107,9 +103,7 @@ def quick_sorted(xs, cmp=cmp_standard):
     Instead of splitting the list down the middle,
     a "pivot" value is randomly selected, 
     and the list is split into a "less than" sublist and a "greater than" sublist.
-
     The pseudocode is:
-
         if xs has 1 element
             it is sorted, so return xs
         else
@@ -118,7 +112,6 @@ def quick_sorted(xs, cmp=cmp_standard):
             put all the values greater than p in a list
             sort both lists recursively
             return the concatenation of (less than, p, and greater than)
-
     You should return a sorted version of the input list xs
     '''
     if len(xs) <= 1:
@@ -128,4 +121,5 @@ def quick_sorted(xs, cmp=cmp_standard):
         lower = xs[:rand]
         higher= xs[rand:]
         return _merged(merge_sorted(lower,cmp),merge_sorted(higher,cmp),cmp)
-# collab with Yusuf Ismael
+    
+    #coolab with Yuauf Ismael
