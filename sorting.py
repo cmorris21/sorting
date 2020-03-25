@@ -46,6 +46,34 @@ def _merged(xs, ys, cmp=cmp_standard):
     and returns a new list containing the elements of both xs and ys.
     Runs in linear time.
     '''
+    if len(left) == 0:
+        return right
+    if len(right)== 0:
+        return left
+    
+    lo=0
+    hi=0
+    x=0
+
+    xs = left + right
+    while lo < len(left) and hi < len(right):
+        if cmp(left[lo],right[hi]) == -1:
+               xs[x] = left[lo]
+               lo += 1
+        else:
+               xs[x] = right[hi]
+               hi+=1
+        x += 1
+    while lo < len(left):
+        xs[x] = left[lo]
+        lo += 1
+        x += 1
+    while hi < len(right):
+        xs[x] = right[hi]
+        hi += 1
+        x+= 1
+  
+    return xs
 
 
 def merge_sorted(xs, cmp=cmp_standard):
@@ -63,6 +91,13 @@ def merge_sorted(xs, cmp=cmp_standard):
 
     You should return a sorted version of the input list xs
     '''
+    if len(xs) <= 1:
+        return xs
+    else:
+        mid = len(xs)//2
+        left = xs[:mid]
+        right = xs[mid:]
+        return _merged(merge_sorted(left,cmp),merge_sorted(right,cmp),cmp)
 
 
 def quick_sorted(xs, cmp=cmp_standard):
@@ -86,17 +121,11 @@ def quick_sorted(xs, cmp=cmp_standard):
 
     You should return a sorted version of the input list xs
     '''
-
-
-def quick_sort(xs, cmp=cmp_standard):
-    '''
-    EXTRA CREDIT:
-    The main advantage of quick_sort is that it can be implemented in-place,
-    i.e. with O(1) memory requirement.
-    Merge sort, on the other hand, has an O(n) memory requirement.
-
-    Follow the pseudocode of the Lomuto partition scheme given on wikipedia
-    (https://en.wikipedia.org/wiki/Quicksort#Algorithm)
-    to implement quick_sort as an in-place algorithm.
-    You should directly modify the input xs variable instead of returning a copy of the list.
-    '''
+    if len(xs) <= 1:
+        return xs
+    else:
+        rand = random.randrange(len(xs))
+        lower = xs[:rand]
+        higher= xs[rand:]
+        return _merged(merge_sorted(lower,cmp),merge_sorted(higher,cmp),cmp)
+# collab with Yusuf Ismael
